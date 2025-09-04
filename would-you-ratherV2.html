@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Would You Rather Generator</title>
+  <style>
+    body {
+      font-family: "Comic Sans MS", cursive, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #c471f5, #fa71cd);
+      margin: 0;
+    }
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      text-align: center;
+      max-width: 750px;
+      width: 90%;
+    }
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      color: #333;
+    }
+    button {
+      background: #7b2ff7;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.2rem;
+      font-size: 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #5c18c9;
+    }
+    .question {
+      margin: 2rem 0;
+      font-size: 1.2rem;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🤯 Would You Rather...?</h1>
+    <div class="question" id="question">Click the button to get something bizarre!</div>
+    <button onclick="generateQuestion()">Generate Question</button>
+  </div>
+
+  <script>
+    const questions = [
+      // Original 50+
+      "Would you rather sneeze glitter every time you talk about yourself, or fart confetti every time you laugh?",
+      "Would you rather fight an octopus that can teleport, or a snail that knows all your secrets?",
+      "Would you rather have spaghetti for hair that regrows daily, or marshmallow fingers that slowly melt in the sun?",
+      "Would you rather have to carry a goose under your arm everywhere you go, or have a raccoon follow you shouting motivational quotes?",
+      "Would you rather hiccup every time someone says your name, or have to sing instead of typing any password?",
+      "Would you rather swap bodies with a goldfish for one week, or swap minds with a toaster for one month?",
+      "Would you rather have shoes that scream every time you take a step, or clothes that change color depending on your mood (very obviously)?",
+      "Would you rather be haunted by a ghost who only judges your fashion choices, or by one who constantly spoils the ending of every show you start?",
+      "Would you rather live in a house where the walls are made of jelly, or where the floor is made of bubble wrap that never pops?",
+      "Would you rather burp loudly every time someone says 'hello', or blink twice as slow as normal for the rest of your life?",
+      // --- New 100 starts here ---
+      "Would you rather have your search history emailed to your boss every Friday, or your mom read your text messages every morning?",
+      "Would you rather sweat mayonnaise or cry Nutella?",
+      "Would you rather only be able to communicate by interpretive dance, or by mime?",
+      "Would you rather have a pet dinosaur that hates you, or a pet robot that loves you too much?",
+      "Would you rather fight one toddler with the strength of a bodybuilder, or ten bodybuilders with the coordination of toddlers?",
+      "Would you rather be trapped in a sitcom laugh track, or in a horror movie soundtrack?",
+      "Would you rather get stuck in an elevator with a mime, or with someone who practices beatboxing non-stop?",
+      "Would you rather be allergic to your favorite food, or addicted to your least favorite food?",
+      "Would you rather accidentally send a voice note of you singing in the shower to your crush, or accidentally like their 7-year-old Instagram post?",
+      "Would you rather have your inner thoughts narrated loudly by Morgan Freeman, or by Gilbert Gottfried?",
+      "Would you rather eat cereal with ketchup instead of milk, or pizza with chocolate sauce instead of cheese?",
+      "Would you rather have a rewind button for conversations, or a mute button for people?",
+      "Would you rather have a personal paparazzi follow you everywhere, or have your internet history livestreamed once a week?",
+      "Would you rather be able to only watch the same movie forever, or never be able to rewatch anything ever again?",
+      "Would you rather be chased by bees every time you hear music, or chased by ducks every time you see the color blue?",
+      "Would you rather wake up with clown makeup that you can’t remove, or wake up bald every day?",
+      "Would you rather fart loudly in a quiet church, or laugh uncontrollably at a funeral?",
+      "Would you rather find a spider in your shoe every morning, or a snake in your bed once a year?",
+      "Would you rather have edible fingernails that regrow daily, or edible earwax that tastes like honey?",
+      "Would you rather never be able to lie, or have everyone know when you’re lying because your nose flashes neon green?",
+      "Would you rather live with an angry goose in your house, or a hyperactive squirrel in your bed?",
+      "Would you rather always be 10 minutes late, or always be 20 minutes early?",
+      "Would you rather wear a wedding dress every day, or a superhero costume every day?",
+      "Would you rather hiccup every time you kiss, or sneeze every time you hug?",
+      "Would you rather have the ability to teleport, but only to public restrooms, or fly, but only one foot off the ground?",
+      "Would you rather have your arms replaced with pool noodles, or your legs replaced with pogo sticks?",
+      "Would you rather get chased by one angry grandma, or by fifty toddlers?",
+      "Would you rather always have to shout when whispering, or whisper when trying to shout?",
+      "Would you rather have to fight Mike Tyson once, or have him follow you around silently for a year?",
+      "Would you rather never be able to drink water again, or never eat bread again?",
+      "Would you rather have permanent duck lips, or permanent raised eyebrows?",
+      "Would you rather have your ex narrate your daily life, or your boss?",
+      "Would you rather live in a world with no memes, or in a world with no pizza?",
+      "Would you rather only be able to walk backwards, or only be able to talk backwards?",
+      "Would you rather your phone autocorrect everything to insults, or autocorrect everything to baby talk?",
+      "Would you rather wake up every day with a new face, or a new name?",
+      "Would you rather always wear socks in the shower, or shoes to bed?",
+      "Would you rather have fingernails that grow 1 foot per day, or eyebrows that double every night?",
+      "Would you rather permanently talk like a pirate, or permanently sing like an opera singer?",
+      "Would you rather drink a milkshake made of pickles, or eat ice cream made of tuna?",
+      "Would you rather have to bark like a dog every time someone greets you, or meow like a cat every time someone says goodbye?",
+      "Would you rather marry a zombie, or marry a ghost?",
+      "Would you rather live in a fridge, or live in a microwave?",
+      "Would you rather have to shave your head every morning, or grow a new beard every hour?",
+      "Would you rather be invisible but only when you’re sneezing, or fly but only while asleep?",
+      "Would you rather have your dream job but no friends, or your dream friends but a job you hate?",
+      "Would you rather eat only spicy food forever, or only bland food forever?",
+      "Would you rather have your boss see your TikTok drafts, or your grandma see your Tinder chats?",
+      "Would you rather have a head shaped like a cube, or a body shaped like a triangle?",
+      "Would you rather be banned from using doors, or banned from using chairs?",
+      "Would you rather only be able to shower in ketchup, or only brush your teeth with mayonnaise?",
+      "Would you rather scream every time you open a door, or whisper every time you close one?",
+      "Would you rather always forget people’s names, or always call them by their ex’s name?",
+      "Would you rather swap lives with a celebrity for one week, or with a medieval peasant forever?",
+      "Would you rather marry someone who only speaks in movie quotes, or someone who only speaks in riddles?",
+      "Would you rather never stop hiccuping, or never stop sneezing?",
+      "Would you rather only be able to walk on all fours, or only hop everywhere like a kangaroo?",
+      "Would you rather smell like fish forever, or like cheese forever?",
+      "Would you rather have every meal taste like cardboard, or taste incredible but cause mild food poisoning?",
+      "Would you rather wear the same socks forever, or the same underwear forever?",
+      "Would you rather be forced to sing the national anthem every time you enter a room, or floss dance every time you leave one?",
+      "Would you rather have a third eye on your forehead, or a third arm on your back?",
+      "Would you rather eat raw onions like apples, or drink olive oil like water?",
+      "Would you rather have your internet search history exposed, or your private thoughts broadcasted on TV?",
+      "Would you rather share your house with a very judgmental parrot, or a very needy goat?",
+      "Would you rather have to use sandpaper as toilet paper, or vinegar as eye drops?",
+      "Would you rather have hiccups every time you kiss, or burp every time you laugh?",
+      "Would you rather constantly feel like you need to sneeze, or constantly feel like you have something in your eye?",
+      "Would you rather live one day as a famous dictator, or one week as a worm?",
+      "Would you rather never be able to laugh again, or never be able to cry again?",
+      "Would you rather fight a kangaroo with boxing gloves, or a gorilla with roller skates?",
+      "Would you rather live inside a theme park, or inside a zoo?",
+      "Would you rather forget how to read, or forget how to speak?",
+      "Would you rather have to eat your meals upside down, or sleep hanging from the ceiling?",
+      "Would you rather have to wear clown shoes everywhere, or a diving mask everywhere?",
+      "Would you rather eat a spider alive, or swim in a pool of worms?",
+      "Would you rather only be able to whisper secrets to strangers, or shout your secrets in public?",
+      "Would you rather be stranded on an island with your worst enemy, or stranded on an island with no one forever?",
+      "Would you rather be followed by a slow zombie forever, or chased once a week by a fast one?",
+      "Would you rather permanently smell like garlic, or permanently smell like sweat?",
+      "Would you rather eat dog food once, or wear a diaper in public for a week?",
+      "Would you rather have your bedroom walls covered in mirrors, or in clown posters?",
+      "Would you rather marry your high school crush, or your worst boss?",
+      "Would you rather sleepwalk every night, or sleep talk every night?",
+      "Would you rather only eat food off the floor, or only drink from puddles?",
+      "Would you rather burp bubbles or fart glitter?",
+      "Would you rather live without music, or live without movies?",
+      "Would you rather have to lick your shoe once a day, or lick someone else’s once a week?",
+      "Would you rather never brush your teeth again, or never shower again?",
+      "Would you rather lose all your money, or lose all your memories?",
+      "Would you rather have to smell like skunk forever, or never be able to smell anything again?",
+      "Would you rather dance every time you walk, or sing every time you talk?",
+      "Would you rather spend one night in a haunted asylum, or one week locked in IKEA?",
+      "Would you rather eat pasta with syrup, or pancakes with ketchup?",
+      "Would you rather be punched in the face by Mike Tyson, or tickled by him for an hour?",
+      "Would you rather live in the ocean like a mermaid, or in the clouds like a bird?",
+      "Would you rather drink only pickle juice forever, or only hot sauce forever?",
+      "Would you rather have your eyelids tattooed neon pink, or your lips tattooed bright green?",
+      "Would you rather never stop clapping, or never stop blinking loudly?",
+      "Would you rather be banned from coffee forever, or from alcohol forever?",
+      "Would you rather live in a desert with no water, or in the Arctic with no heat?",
+      "Would you rather have to howl at the moon every night, or hiss at the sun every morning?",
+      "Would you rather eat only moldy bread, or drink only sour milk?",
+      "Would you rather live in a house with no doors, or no windows?",
+      "Would you rather have to tell the truth always, or lie always?",
+      "Would you rather fight one giant chicken, or a thousand tiny horses?",
+      "Would you rather never sleep again, or never wake up?",
+      "Would you rather always be the funniest person in the room, or the smartest?",
+      "Would you rather lick a frozen pole, or stick your hand in boiling water for 2 seconds?",
+      "Would you rather live with no electricity, or no running water?",
+      "Would you rather be cursed to always step in dog poop, or always drop your phone in water?",
+      "Would you rather lose your eyebrows forever, or lose your teeth forever?"
+    ];
+
+    function generateQuestion() {
+      const randomIndex = Math.floor(Math.random() * questions.length);
+      document.getElementById("question").innerText = questions[randomIndex];
+    }
+  </script>
+</body>
+</html>
